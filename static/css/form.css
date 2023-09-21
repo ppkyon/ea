@@ -1,0 +1,38 @@
+.input-text {
+    height: 2rem;
+    color: rgba(59,64,67,1);
+    font-size: 0.8rem;
+    border: 1px solid #cdd6dd;
+    border-radius: 0.4rem;
+    line-height: 1.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.input-text:focus {
+    border-color: #727b94;
+    outline: 0;
+    box-shadow: 0 0 0 0.1rem rgb(102 111 134 / 10%);
+}
+.input-text:focus-visible {
+    outline: 0px;
+}
+
+.parsley-errors-list {
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-left: 0.5rem;
+    list-style-type: none;
+}
+.parsley-errors-list li {
+    color: red;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+.parsley-error {
+    border: 1px solid red !important;
+}
+
+button:focus {
+    box-shadow: 0 0 0 0 !important;
+}

@@ -1,0 +1,26 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        {% include './meta.html' %}
+
+        <title>{{ title }}</title>
+
+        {% include './css.html' %}
+        {% block css %}
+        {% endblock %}
+    </head>
+    <body class="position-relative">
+        {% include './header.html' %}
+        {% include './side.html' %}
+        <div class="main pt-4 pb-4 ps-5 pe-5">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+        {% include './js.html' %}
+        {% block js %}
+        {% endblock %}
+    </body>
+</html>

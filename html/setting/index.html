@@ -1,0 +1,166 @@
+{% extends '../base.html' %}
+
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'css/setting.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12 d-flex justify-content-start align-items-center">
+            <p class="main-title mb-3 me-3">{{ title }}</p>
+            <div class="d-flex justify-content-start align-items-center ms-auto">
+                <button class="btn main-button p-0 me-3 mb-3">メールアドレス変更</button>
+                <button class="btn main-button p-0 me-3 mb-3">パスワード変更</button>
+                <button class="btn main-button p-0 mb-3">管理者を追加する</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <div class="profile-area ps-3 pe-3">
+                <div class="content pt-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <label class="mb-0">ID</label>
+                                <input type="text" value="{{ manager.display_id }}" class="input-text readonly ps-2 pe-2" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <label class="mb-0">名前</label>
+                                {% if manager.profile %}
+                                    {% if manager.profile.family_name and manager.profile.first_name %}
+                                        <input type="text" value="{{ manager.profile.family_name }} {{ manager.profile.first_name }}" class="input-text readonly ps-2 pe-2" readonly>
+                                    {% elif manager.profile.family_name %}
+                                        <input type="text" value="{{ manager.profile.family_name }}" class="input-text readonly ps-2 pe-2" readonly>
+                                    {% elif manager.profile.first_name %}
+                                        <input type="text" value="{{ manager.profile.first_name }}" class="input-text readonly ps-2 pe-2" readonly>
+                                    {% else %}
+                                        <input type="text" value="-" class="input-text readonly ps-2 pe-2" readonly>
+                                    {% endif %}
+                                {% else %}
+                                    <input type="text" value="-" class="input-text readonly ps-2 pe-2" readonly>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <label class="mb-0">フリガナ</label>
+                                {% if manager.profile %}
+                                    {% if manager.profile.family_name_kana and manager.profile.first_name_kana %}
+                                        <input type="text" value="{{ manager.profile.family_name_kana }} {{ manager.profile.first_name_kana }}" class="input-text readonly ps-2 pe-2" readonly>
+                                    {% elif manager.profile.family_name_kana %}
+                                        <input type="text" value="{{ manager.profile.family_name_kana }}" class="input-text readonly ps-2 pe-2" readonly>
+                                    {% elif manager.profile.first_name_kana %}
+                                        <input type="text" value="{{ manager.profile.first_name_kana }}" class="input-text readonly ps-2 pe-2" readonly>
+                                    {% else %}
+                                        <input type="text" value="-" class="input-text readonly ps-2 pe-2" readonly>
+                                    {% endif %}
+                                {% else %}
+                                    <input type="text" value="-" class="input-text readonly ps-2 pe-2" readonly>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <label class="mb-0">メールアドレス</label>
+                                <input type="text" value="{{ manager.email }}" class="input-text readonly ps-2 pe-2" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content border-bottom pb-2 mb-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <label class="mb-0">登録日</label>
+                                <input type="text" value="{{ manager.created_at|date:'Y年m月d日' }}" class="input-text readonly ps-2 pe-2" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content pb-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <button type="button" class="btn edit-button d-block ms-auto me-auto" data-bs-toggle="modal" data-bs-target="#edit_manager_modal">編集</button>
+                                <button type="button" value="manager" class="btn delete-button d-block ms-auto me-auto">削除</button>
+                                <button type="button" class="d-none" data-bs-toggle="modal" data-bs-target="#delete_check_modal"></button>
+                                <input type="hidden" id="delete_manager_url" value="{% url 'setting:delete_manager' %}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="list-area">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table-area">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 250px;">名前</th>
+                                        <th>メールアドレス</th>
+                                        <th style="width: 75px;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for manager_item in manager_list %}
+                                        <tr>
+                                            <td>
+                                                {% if manager_item.profile %}
+                                                    {% if manager_item.profile.family_name and manager_item.profile.first_name %}
+                                                        <input type="text" value="{{ manager_item.profile.family_name }} {{ manager_item.profile.first_name }}" class="input-text readonly ps-2 pe-2" readonly>
+                                                    {% elif manager_item.profile.family_name %}
+                                                        <input type="text" value="{{ manager_item.profile.family_name }}" class="input-text readonly ps-2 pe-2" readonly>
+                                                    {% elif manager_item.profile.first_name %}
+                                                        <input type="text" value="{{ manager_item.profile.first_name }}" class="input-text readonly ps-2 pe-2" readonly>
+                                                    {% else %}
+                                                        <input type="text" value="-" class="input-text readonly ps-2 pe-2" readonly>
+                                                    {% endif %}
+                                                {% else %}
+                                                    <input type="text" value="-" class="input-text readonly ps-2 pe-2" readonly>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <input type="text" value="{{ manager_item.email }}" class="input-text readonly ps-2 pe-2" readonly>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn">
+                                                    <i class="bx bx-dots-horizontal-rounded bx-sm"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'modal.html' %}
+    {% include 'setting/modal.html' %}
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/setting.js' %}"></script>
+{% endblock %}

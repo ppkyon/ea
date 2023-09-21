@@ -1,0 +1,64 @@
+<div class="side position-fixed">
+    <div class="side-area">
+        <div class="row">
+            <div class="col-12">
+                <div class="menu-area">
+                    <ul class="d-flex position-relative m-0 p-0 pb-1 mt-3">
+                        {% if '/dashboard/' in request.path %}
+                            <li class="active position-relative">
+                                <a href="#" class="d-flex position-relative mt-1 mb-1 ps-1">
+                                    <span>ダッシュボード</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="position-relative">
+                                <a href="#" class="d-flex position-relative mt-1 mb-1 ps-1">
+                                    <span>ダッシュボード</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if '/user/' in request.path %}
+                            <li class="active position-relative">
+                                <a href="#" class="d-flex position-relative mt-1 mb-1 ps-1">
+                                    <span>ユーザーリスト</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="position-relative">
+                                <a href="#" class="d-flex position-relative mt-1 mb-1 ps-1">
+                                    <span>ユーザーリスト</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if '/ranking/' in request.path %}
+                            <li class="active position-relative">
+                                <a href="#" class="d-flex position-relative mt-1 mb-1 ps-1">
+                                    <span>ランキング</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="position-relative">
+                                <a href="#" class="d-flex position-relative mt-1 mb-1 ps-1">
+                                    <span>ランキング</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if '/setting/' in request.path %}
+                            <li class="active position-relative">
+                                <a href="{% url 'setting:index' %}" class="d-flex position-relative mt-1 mb-1 ps-1">
+                                    <span>設定</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="position-relative">
+                                <a href="{% url 'setting:index' %}" class="d-flex position-relative mt-1 mb-1 ps-1">
+                                    <span>設定</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

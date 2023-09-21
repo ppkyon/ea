@@ -1,0 +1,29 @@
+html {
+    overflow: overlay;
+}
+
+.main {
+    margin-left: 170px;
+    width: calc(100% - 170px);
+    min-height: 100vh;
+    background-color: #fafafa;
+}
+.main .main-title {
+    color: #000;
+    font-size: 1rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.main-button {
+    width: 150px;
+    height: 35px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #fff;
+    border-radius: 5px;
+    transition: all .4s;
+}
+.main-button {
+    color: blue;
+    border: 1px solid blue;
+}

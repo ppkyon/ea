@@ -1,0 +1,26 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        {% include './meta.html' %}
+
+        <title>{{ title }}</title>
+
+        {% include './css.html' %}
+        {% block css %}
+        {% endblock %}
+    </head>
+    <body>
+        <div class="content">
+            <div class="inner">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+
+        {% include './js.html' %}
+        {% block js %}
+        {% endblock %}
+    </body>
+</html>

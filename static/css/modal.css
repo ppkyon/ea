@@ -1,0 +1,44 @@
+.modal .modal-title {
+    font-size: 1rem;
+}
+
+.modal-content .modal-body {
+    max-height: 65vh;
+    overflow-y: auto;
+}
+.modal-content .modal-body .title {
+    font-size: 1rem;
+}
+.modal-content .modal-body .description {
+    color: #3b4043;
+    font-size: 0.75rem;
+    opacity: 0.5;
+}
+.modal-content .modal-body .yes-button {
+    padding: 5px;
+    width: 90%;
+    max-width: 200px;
+    color: #FFF;
+    font-size: 12px;
+    background-color: limegreen;
+}
+.modal-content .modal-body .no-button {
+    padding: 5px;
+    width: 90%;
+    max-width: 200px;
+    font-size: 12px;
+    background-color: #efefef;
+}
+
+.modal-content .modal-footer .action-button {
+    padding: 5px;
+    width: 90%;
+    max-width: 200px;
+    color: #FFF;
+    font-size: 12px;
+    background-color: limegreen;
+}
+
+.up-modal {
+    z-index: 1065;
+}

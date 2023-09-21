@@ -13,21 +13,26 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 
 import os
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env(DEBUG=(bool, False),)
+environ.Env.read_env('.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-08!8bf*nu1f)bt2ia22m@-po30ili&gw4+4xg4j7orpqr9aom%"
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+
+CSRF_TRUSTED_ORIGINS = ['https://68fb-126-74-175-24.ngrok-free.app']
 
 
 # Application definition
@@ -39,6 +44,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
+    'ea',
+    'fixture',
+    'sign',
 ]
 
 MIDDLEWARE = [
@@ -76,9 +85,13 @@ WSGI_APPLICATION = "config.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': env('DB_DEFAULT_ENGINE'),
+        'NAME': env('DB_DEFAULT_NAME'),
+        'USER': env('DB_DEFAULT_USER'),
+        'PASSWORD': env('DB_DEFAULT_PASSWORD'),
+        'HOST': env('DB_DEFAULT_HOST'),
+        'PORT': env('DB_DEFAULT_PORT'),
     }
 }
 
@@ -105,6 +118,8 @@ TIME_ZONE = "Asia/Tokyo"
 
 USE_I18N = True
 
+USE_L10N = True
+
 USE_TZ = True
 
 
@@ -124,3 +139,11 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = 'sign.AuthUser'
+
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = env('EMAIL_USE_TLS')
