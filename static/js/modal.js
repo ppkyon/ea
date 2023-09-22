@@ -1,4 +1,5 @@
 $( function() {
+    modal_reload( 'add' );
     modal_reload( 'edit' );
     modal_reload( 'delete' );
 });

@@ -5,6 +5,12 @@ from sign.models import AuthUser, ManagerProfile
 
 import uuid
 
+def add_manager(request):
+    return JsonResponse( {}, safe=False )
+
+def add_manager_check(request):
+    return JsonResponse( {}, safe=False )
+
 def save_manager(request):
     manager = AuthUser.objects.filter(display_id=request.POST.get('id')).first()
     if ManagerProfile.objects.filter(manager=manager).exists():
@@ -32,4 +38,18 @@ def delete_manager(request):
     manager.save()
 
     logout(request)
+    return JsonResponse( {}, safe=False )
+
+
+
+def change_email(request):
+    return JsonResponse( {}, safe=False )
+
+def change_email_check(request):
+    return JsonResponse( {}, safe=False )
+
+def change_password(request):
+    return JsonResponse( {}, safe=False )
+
+def change_password_check(request):
     return JsonResponse( {}, safe=False )
