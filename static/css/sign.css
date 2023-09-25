@@ -66,3 +66,30 @@ body {
 .input-area .login-button:hover {
     box-shadow: 0 6px 12px rgb(0 0 0 / 0.16);
 }
+
+.message-area .mdi {
+    font-size: 42px;
+}
+.message-area .message-title {
+    font-size: 1.6rem;
+}
+.message-area .message-description {
+    color: rgba(59,64,67,0.5);
+    font-size: 1.2rem;
+}
+.message-area .action-button {
+    margin-top: 1.65rem;
+    margin-bottom: 1.65rem;
+    width: 100%;
+    height: 4rem;
+    color: #fff;
+    font-size: 1.4rem;
+    background-color: #00b074;
+    border: none;
+    border-radius: 0.8rem;
+    line-height: 3rem;
+    transition: all .4s ease-in-out;
+}
+.message-area .action-button:hover {
+    box-shadow: 0 6px 12px rgb(0 0 0 / 0.16);
+}

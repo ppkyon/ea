@@ -49,3 +49,23 @@ class ManagerProfile(models.Model):
 
     class Meta:
         db_table = 'manager_profile'
+
+class EmailChangeToken(models.Model):
+    id = models.CharField(primary_key=True, max_length=255, null=False, blank=False, unique=True)
+    manager = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
+    email = models.EmailField(null=True, blank=True)
+    token = models.CharField(max_length=255, unique=True)
+    expiration_date = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'email_change_token'
+
+class PasswordChangeToken(models.Model):
+    id = models.CharField(primary_key=True, max_length=255, null=False, blank=False, unique=True)
+    manager = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
+    password = models.EmailField(null=True, blank=True)
+    token = models.CharField(max_length=255, unique=True)
+    expiration_date = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'password_change_token'

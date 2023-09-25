@@ -1,14 +1,54 @@
 $( function() {
     $( document ).on( 'click', '#change_email_modal .action-button', function () {
         if ( $( '#change_email_form' ).parsley().validate() ) {
-            $( this ).next().trigger( 'click' );
-            up_modal();
+            var target = $( this );
+            var form_data = new FormData();
+            form_data.append( 'email', $( '#change_email_form [name=email]' ).val() );
+            form_data.append( 'password', $( '#change_email_form [name=password]' ).val() );
+            $.ajax({
+                'data': form_data,
+                'url': $( '#change_email_check_form' ).val(),
+                'type': 'POST',
+                'dataType': 'json',
+                'processData': false,
+                'contentType': false,
+            }).done( function( response ){
+                if ( response.check ) {
+                    $( '#change_email_modal .error-message-area' ).addClass( 'd-none' );
+                    $( '#change_email_modal .error-message-area .error-message' ).text( '' );
+                    $( target ).next().trigger( 'click' );
+                    up_modal();
+                } else {
+                    $( '#change_email_modal .error-message-area' ).removeClass( 'd-none' );
+                    $( '#change_email_modal .error-message-area .error-message' ).text( response.message );
+                }
+            }).fail( function(){
+                $( '#change_email_modal .error-message-area' ).removeClass( 'd-none' );
+                $( '#change_email_modal .error-message-area .error-message' ).text( 'メールアドレスの変更に失敗しました' );
+            });
         }
     });
     $( document ).on( 'click', '#change_email_check_modal .yes-button', function () {
-        $( '#change_email_check_modal .no-button' ).trigger( 'click' );
-        $( this ).next().trigger( 'click' );
-        up_modal();
+        var target = $( this );
+        var form_data = new FormData();
+        form_data.append( 'email', $( '#change_email_form [name=email]' ).val() );
+        form_data.append( 'password', $( '#change_email_form [name=password]' ).val() );
+        $.ajax({
+            'data': form_data,
+            'url': $( '#change_email_form' ).attr( 'action' ),
+            'type': 'POST',
+            'dataType': 'json',
+            'processData': false,
+            'contentType': false,
+        }).done( function( response ){
+            $( '#change_email_check_modal .no-button' ).trigger( 'click' );
+            $( target ).next().trigger( 'click' );
+            up_modal();
+        }).fail( function(){
+            $( '#change_email_check_modal .no-button' ).trigger( 'click' );
+            $( target ).next().next().trigger( 'click' );
+            up_modal();
+        });
     });
     modal_reload( 'change_email' );
 

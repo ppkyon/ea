@@ -18,6 +18,15 @@
     outline: 0px;
 }
 
+.error-message-area {
+    background-color: #ffe7de;
+    border: 1px solid red;
+    border-radius: 0.5rem;
+}
+.error-message-area .error-message {
+    color: red;
+}
+
 .parsley-errors-list {
     margin-bottom: 0;
     padding-top: 0;
