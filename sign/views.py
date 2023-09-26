@@ -12,7 +12,7 @@ from django.views.generic import View
 
 from sign.forms import ManagerLoginForm
 
-from sign.models import EmailChangeToken
+from sign.models import ManagerProfile, EmailChangeToken, PasswordChangeToken
 
 import datetime
 
@@ -74,3 +74,45 @@ class EmailChangeView(View):
             send_mail(subject, template.render(context), settings.EMAIL_HOST_USER, [user.email])
 
             return render(self.request, self.template_name, {'title': self.title, 'user': user, 'status': 0})
+
+class PasswordChangeView(View):
+    template_name = 'sign/manager/change_password.html'
+    title = 'パスワード変更'
+
+    def get(self, request, **kwargs):
+        user = None
+        try:
+            token = force_str(urlsafe_base64_decode(kwargs.get("uidb64")))
+            temp_user = get_object_or_404(PasswordChangeToken, token=token)
+            user = temp_user.manager
+        except:
+            user = None
+
+        PasswordChangeToken.objects.filter(token=token).delete()
+        if user == None:
+            return render(self.request, self.template_name, {'title': self.title, 'status': 1})
+        elif datetime.datetime.now() > temp_user.expiration_date:
+            return render(self.request, self.template_name, {'title': self.title, 'status': 2})
+        else:
+            if ManagerProfile.objects.filter(manager=user).exists():
+                profile = ManagerProfile.objects.filter(manager=user).first()
+                if profile.family_name and profile.first_name:
+                    user.status = 3
+                else:
+                    user.status = 2
+            else:
+                user.status = 2
+            user.password = temp_user.password
+            user.save()
+            
+            subject = 'パスワード変更完了メール'
+            template = get_template('setting/email/change_password_complete.txt')
+            site = get_current_site(request)
+            context = {
+                'protocol': 'https' if request.is_secure() else 'http',
+                'domain': site.domain,
+                'user': user,
+            }
+            send_mail(subject, template.render(context), settings.EMAIL_HOST_USER, [user.email])
+
+        return render(self.request, self.template_name, {'title': self.title, 'status': 0})

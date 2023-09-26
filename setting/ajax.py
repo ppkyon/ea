@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import logout, authenticate
+from django.contrib.auth.hashers import make_password
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.http import JsonResponse
@@ -9,7 +10,7 @@ from django.utils.http import urlsafe_base64_encode
 
 from common import create_token, create_expiration_date
 
-from sign.models import AuthUser, ManagerProfile, EmailChangeToken
+from sign.models import AuthUser, ManagerProfile, EmailChangeToken, PasswordChangeToken
 
 import uuid
 
@@ -87,7 +88,35 @@ def change_email_check(request):
     return JsonResponse( {'check': True}, safe=False )
 
 def change_password(request):
+    token = create_token()
+    if PasswordChangeToken.objects.filter(manager=request.user).exists():
+        token_data = PasswordChangeToken.objects.filter(manager=request.user).first()
+        token_data.password = make_password(request.POST.get("new_password")),
+        token_data.token = token
+        token_data.expiration_date = create_expiration_date(24)
+        token_data.save()
+    else:
+        PasswordChangeToken.objects.create(
+            id = str(uuid.uuid4()),
+            manager = request.user,
+            password = make_password(request.POST.get("new_password")),
+            token = token,
+            expiration_date = create_expiration_date(24)
+        )
+    
+    subject = 'パスワード変更認証メール'
+    template = get_template('setting/email/change_password.txt')
+    site = get_current_site(request)
+    context = {
+        'protocol': 'https' if request.is_secure() else 'http',
+        'domain': site.domain,
+        'uid': force_str(urlsafe_base64_encode(force_bytes(token))),
+    }
+    send_mail(subject, template.render(context), settings.EMAIL_HOST_USER, [request.user.email])
+    
     return JsonResponse( {}, safe=False )
 
 def change_password_check(request):
-    return JsonResponse( {}, safe=False )
+    if not authenticate(username=request.user.email, password=request.POST.get('now_password')):
+        return JsonResponse( {'check': False}, safe=False )
+    return JsonResponse( {'check': True}, safe=False )
