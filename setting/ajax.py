@@ -8,17 +8,40 @@ from django.template.loader import get_template
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode
 
-from common import create_token, create_expiration_date
+from common import create_code, create_token, create_password, create_expiration_date
 
 from sign.models import AuthUser, ManagerProfile, EmailChangeToken, PasswordChangeToken
 
 import uuid
 
 def add_manager(request):
+    password = create_password()
+    user = AuthUser.objects.create(
+        id = str(uuid.uuid4()),
+        display_id = create_code(12, AuthUser),
+        email = request.POST.get('email'),
+        password = make_password(password),
+        status = 1,
+    )
+    
+    subject = 'IDとパスワードの送付'
+    template = get_template('setting/email/add_manager.txt')
+    site = get_current_site(request)
+    context = {
+        'protocol': 'https' if request.is_secure() else 'http',
+        'domain': site.domain,
+        'user': user,
+        'password': password,
+    }
+    send_mail(subject, template.render(context), settings.EMAIL_HOST_USER, [request.POST.get("email")])
+    
     return JsonResponse( {}, safe=False )
 
 def add_manager_check(request):
-    return JsonResponse( {}, safe=False )
+    if AuthUser.objects.filter(email=request.POST.get('email')).exists():
+        return JsonResponse( {'check': False, 'message': 'すでに登録済みのメールアドレスです'}, safe=False )
+    else:
+        return JsonResponse( {'check': True, 'message': ''}, safe=False )
 
 def save_manager(request):
     manager = AuthUser.objects.filter(display_id=request.POST.get('id')).first()

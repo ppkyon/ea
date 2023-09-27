@@ -105,14 +105,61 @@ $( function() {
 
     $( document ).on( 'click', '#add_manager_modal .action-button', function () {
         if ( $( '#add_manager_form' ).parsley().validate() ) {
-            $( this ).next().trigger( 'click' );
-            up_modal();
+            var target = $( this );
+            var form_data = new FormData();
+            form_data.append( 'email', $( '#add_manager_form [name=email]' ).val() );
+            $.ajax({
+                'data': form_data,
+                'url': $( '#add_manager_check_form' ).val(),
+                'type': 'POST',
+                'dataType': 'json',
+                'processData': false,
+                'contentType': false,
+            }).done( function( response ){
+                if ( response.check ) {
+                    $( '#add_check_modal .modal-description-area' ).removeClass( 'd-none' );
+                    $( '#add_check_modal .modal-description-area .description' ).text( 'メールアドレス宛にログイン情報を記載したメールを送信します' );
+                    $( '#add_manager_modal .error-message-area' ).addClass( 'd-none' );
+                    $( '#add_manager_modal .error-message-area .error-message' ).text( '' );
+                    $( '#add_check_modal .yes-button' ).val( $( target ).val() );
+                    $( target ).next().trigger( 'click' );
+                    up_modal();
+                } else {
+                    $( '#add_check_modal .modal-description-area' ).addClass( 'd-none' );
+                    $( '#add_check_modal .modal-description-area .description' ).text( '' );
+                    $( '#add_manager_modal .error-message-area' ).removeClass( 'd-none' );
+                    $( '#add_manager_modal .error-message-area .error-message' ).text( response.message );
+                }
+            }).fail( function(){
+                $( '#add_check_modal .modal-description-area' ).addClass( 'd-none' );
+                $( '#add_check_modal .modal-description-area .description' ).text( '' );
+                $( '#add_manager_modal .error-message-area' ).removeClass( 'd-none' );
+                $( '#add_manager_modal .error-message-area .error-message' ).text( '管理者の追加に失敗しました' );
+            });
         }
     });
     $( document ).on( 'click', '#add_check_modal .yes-button', function () {
-        $( '#add_check_modal .no-button' ).trigger( 'click' );
-        $( this ).next().trigger( 'click' );
-        up_modal();
+        if ( $( this ).val() == 'manager' ) {
+            var target = $( this );
+            var form_data = new FormData();
+            form_data.append( 'email', $( '#add_manager_form [name=email]' ).val() );
+            $.ajax({
+                'data': form_data,
+                'url': $( '#add_manager_form' ).attr( 'action' ),
+                'type': 'POST',
+                'dataType': 'json',
+                'processData': false,
+                'contentType': false,
+            }).done( function( response ){
+                $( '#add_check_modal .no-button' ).trigger( 'click' );
+                $( target ).next().trigger( 'click' );
+                up_modal();
+            }).fail( function(){
+                $( '#add_check_modal .no-button' ).trigger( 'click' );
+                $( target ).next().next().trigger( 'click' );
+                up_modal();
+            });
+        }
     });
 
     $( document ).on( 'click', '#edit_manager_modal .action-button', function () {
