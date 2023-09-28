@@ -143,14 +143,24 @@
                                                 <input type="text" value="{{ manager_item.email }}" class="input-text readonly ps-2 pe-2" readonly>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn">
-                                                    <i class="bx bx-dots-horizontal-rounded bx-sm"></i>
-                                                </button>
+                                                <div class="dropdown d-inline-block p-0">
+                                                    <button type="button" class="btn" data-bs-toggle="dropdown">
+                                                        <i class="bx bx-dots-horizontal-rounded bx-sm"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <button type="button" class="btn dropdown-item fw-bold text-center">詳細</button>
+                                                        <button type="button" value="manager_item" class="btn dropdown-item delete-manager-button fw-bold text-center border-top p-1 pt-2">削除</button>
+                                                        <button type="button" value="{{ manager_item.display_id }}" class="d-none" data-bs-toggle="modal" data-bs-target="#delete_check_modal"></button>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
                             </table>
+                            <form id="delete_manager_form" action="{% url 'setting:delete_manager' %}" method="POST" enctype="multipart/form-data" data-parsley-focus="none">
+                                <input type="hidden" name="id">
+                            </form>
                         </div>
                     </div>
                 </div>

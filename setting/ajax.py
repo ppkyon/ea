@@ -69,7 +69,8 @@ def delete_manager(request):
     manager.delete_flg = True
     manager.save()
 
-    logout(request)
+    if request.POST.get('logout_flg') == 'true':
+        logout(request)
     return JsonResponse( {}, safe=False )
 
 

@@ -201,14 +201,41 @@ $( function() {
         $( '#delete_check_modal .yes-button' ).val( $( this ).val() );
         $( this ).next().trigger( 'click' );
     });
+    $( document ).on( 'click', '.delete-manager-button', function () {
+        $( '#delete_check_modal .yes-button' ).val( $( this ).val() );
+        $( '#delete_manager_form [name=id]' ).val( $( this ).next().val() );
+        $( this ).next().trigger( 'click' );
+    });
     $( document ).on( 'click', '#delete_check_modal .yes-button', function () {
         if ( $( this ).val() == 'manager' ) {
             var target = $( this );
             var form_data = new FormData();
             form_data.append( 'id', $( '#save_manager_form [name=id]' ).val() );
+            form_data.append( 'logout_flg', true );
             $.ajax({
                 'data': form_data,
                 'url': $( '#delete_manager_url' ).val(),
+                'type': 'POST',
+                'dataType': 'json',
+                'processData': false,
+                'contentType': false,
+            }).done( function( response ){
+                $( '#delete_check_modal .no-button' ).trigger( 'click' );
+                $( target ).next().trigger( 'click' );
+                up_modal();
+            }).fail( function(){
+                $( '#delete_check_modal .no-button' ).trigger( 'click' );
+                $( target ).next().next().trigger( 'click' );
+                up_modal();
+            });
+        } else if ( $( this ).val() == 'manager_item' ) {
+            var target = $( this );
+            var form_data = new FormData();
+            form_data.append( 'id', $( '#delete_manager_form [name=id]' ).val() );
+            form_data.append( 'logout_flg', false );
+            $.ajax({
+                'data': form_data,
+                'url': $( '#delete_manager_form' ).attr( 'action' ),
                 'type': 'POST',
                 'dataType': 'json',
                 'processData': false,
