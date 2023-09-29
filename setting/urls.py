@@ -11,6 +11,7 @@ urlpatterns = [
     path('manager/add/check/', ajax.add_manager_check, name='add_manager_check'),
     path('manager/save', ajax.save_manager, name='save_manager'),
     path('manager/delete', ajax.delete_manager, name='delete_manager'),
+    path('manager/get', ajax.get_manager, name='get_manager'),
 
     path('email/change/', ajax.change_email, name='change_email'),
     path('email/change/check/', ajax.change_email_check, name='change_email_check'),

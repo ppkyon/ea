@@ -28,3 +28,15 @@
     color: red;
     border: 1px solid red;
 }
+
+.modal .reset-button {
+    width: 150px;
+    height: 35px;
+    color: limegreen;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #fff;
+    border: 1px solid limegreen;
+    border-radius: 5px;
+    transition: all .4s;
+}

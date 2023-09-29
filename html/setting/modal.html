@@ -138,6 +138,86 @@
         </div>
     </div>
 </div>
+<div id="detail_manager_modal" class="modal fade">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header d-block ps-4 pe-4">
+                <div class="row">
+                    <div class="col-11">
+                        <div class="d-flex align-items-center">
+                            <p class="modal-title fw-bold">管理者詳細</p>
+                            <button type="button" value="" class="btn reset-button reset-password-button d-block ms-auto me-2">パスワードリセット</button>
+                            <button type="button" class="up-modal-button d-none" data-bs-toggle="modal" data-bs-target="#reset_password_check_modal"></button>
+                            <input type="hidden" id="reset_password_url" value="#">
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <button type="button" class="btn-close close-button me-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body d-block ps-4 pe-4">
+                <input type="hidden" id="get_manager_url" value="{% url 'setting:get_manager' %}">
+                <div class="content">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <label class="text-end pe-4 mb-0" style="width: 25%;">登録日</label>
+                                <input type="text" id="detail_manager_create_date" class="input-text readonly ps-2 pe-2" style="width: 75%;" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <label class="text-end pe-4 mb-0" style="width: 25%;">ID</label>
+                                <input type="text" id="detail_manager_id" class="input-text readonly ps-2 pe-2" style="width: 75%;" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <label class="text-end pe-4 mb-0" style="width: 25%;">氏名</label>
+                                <div class="input-content d-flex" style="width: 75%;">
+                                    <input type="text" id="detail_manager_family_name" class="input-text ps-2 pe-2 me-2" disabled>
+                                    <input type="text" id="detail_manager_first_name" class="input-text ps-2 pe-2 ms-auto" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <label class="text-end pe-4 mb-0" style="width: 25%;">フリガナ</label>
+                                <div class="input-content d-flex" style="width: 75%;">
+                                    <input type="text" id="detail_manager_family_name_kana" class="input-text ps-2 pe-2 me-2" disabled>
+                                    <input type="text" id="detail_manager_first_name_kana" class="input-text ps-2 pe-2 ms-auto" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <label class="text-end pe-4 mb-0" style="width: 25%;">メールアドレス</label>
+                                <input type="text" id="detail_manager_email" class="input-text readonly ps-2 pe-2" style="width: 75%;" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div id="change_email_modal" class="modal fade">
     <div class="modal-dialog modal-dialog-centered">

@@ -148,7 +148,8 @@
                                                         <i class="bx bx-dots-horizontal-rounded bx-sm"></i>
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        <button type="button" class="btn dropdown-item fw-bold text-center">詳細</button>
+                                                        <button type="button" value="manager_item" class="btn dropdown-item detail-manager-button fw-bold text-center">詳細</button>
+                                                        <button type="button" value="{{ manager_item.display_id }}" class="d-none" data-bs-toggle="modal" data-bs-target="#detail_manager_modal"></button>
                                                         <button type="button" value="manager_item" class="btn dropdown-item delete-manager-button fw-bold text-center border-top p-1 pt-2">削除</button>
                                                         <button type="button" value="{{ manager_item.display_id }}" class="d-none" data-bs-toggle="modal" data-bs-target="#delete_check_modal"></button>
                                                     </div>

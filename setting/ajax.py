@@ -8,7 +8,7 @@ from django.template.loader import get_template
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode
 
-from common import create_code, create_token, create_password, create_expiration_date
+from common import create_code, create_token, create_password, create_expiration_date, get_model_field
 
 from sign.models import AuthUser, ManagerProfile, EmailChangeToken, PasswordChangeToken
 
@@ -72,6 +72,12 @@ def delete_manager(request):
     if request.POST.get('logout_flg') == 'true':
         logout(request)
     return JsonResponse( {}, safe=False )
+
+def get_manager(request):
+    manager = AuthUser.objects.filter(display_id=request.POST.get('id')).values(*get_model_field(AuthUser)).first()
+    manager['created_at'] = manager['created_at'].strftime('%Y年%m月%d日')
+    manager['profile'] = ManagerProfile.objects.filter(manager__id=manager['id']).values(*get_model_field(ManagerProfile)).first()
+    return JsonResponse( manager, safe=False )
 
 
 

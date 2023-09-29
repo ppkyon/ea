@@ -197,6 +197,50 @@ $( function() {
         }
     });
 
+    $( document ).on( 'click', '.detail-manager-button', function () {
+        var target = $( this );
+        var form_data = new FormData();
+        form_data.append( 'id', $( this ).next().val() );
+        $.ajax({
+            'data': form_data,
+            'url': $( '#get_manager_url' ).val(),
+            'type': 'POST',
+            'dataType': 'json',
+            'processData': false,
+            'contentType': false,
+        }).done( function( response ){
+            $( '#detail_manager_modal #detail_manager_create_date' ).val( response.created_at );
+            $( '#detail_manager_modal #detail_manager_id' ).val( response.display_id );
+            $( '#detail_manager_modal #detail_manager_email' ).val( response.email );
+            
+            if ( response.profile != null && response.profile.family_name != null && response.profile.family_name != '' ) {
+                $( '#detail_manager_modal #detail_manager_family_name' ).val( response.profile.family_name );
+            } else {
+                $( '#detail_manager_modal #detail_manager_family_name' ).val( '-' );
+            }
+            if ( response.profile != null && response.profile.first_name != null && response.profile.first_name != '' ) {
+                $( '#detail_manager_modal #detail_manager_first_name' ).val( response.profile.first_name );
+            } else {
+                $( '#detail_manager_modal #detail_manager_first_name' ).val( '-' );
+            }
+            if ( response.profile != null && response.profile.family_name_kana != null && response.profile.family_name_kana != '' ) {
+                $( '#detail_manager_modal #detail_manager_family_name_kana' ).val( response.profile.family_name_kana );
+            } else {
+                $( '#detail_manager_modal #detail_manager_family_name_kana' ).val( '-' );
+            }
+            if ( response.profile != null && response.profile.first_name_kana != null && response.profile.first_name_kana != '' ) {
+                $( '#detail_manager_modal #detail_manager_first_name_kana' ).val( response.profile.first_name_kana );
+            } else {
+                $( '#detail_manager_modal #detail_manager_first_name_kana' ).val( '-' );
+            }
+
+            $( '#detail_manager_modal .reset-button' ).val( response.display_id );
+            $( target ).next().trigger( 'click' );
+        }).fail( function(){
+            
+        });
+    });
+
     $( document ).on( 'click', '.delete-button', function () {
         $( '#delete_check_modal .yes-button' ).val( $( this ).val() );
         $( this ).next().trigger( 'click' );
