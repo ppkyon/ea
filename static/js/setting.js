@@ -241,6 +241,33 @@ $( function() {
         });
     });
 
+    $( '.reset-password-button' ).on( 'click', function() {
+        $( '#reset_password_check_modal .yes-button' ).val( $( this ).val() );
+        $( this ).next().trigger( 'click' );
+        up_modal();
+    });
+    $( '#reset_password_check_modal .yes-button' ).on( 'click', function() {
+        var form_data = new FormData();
+        form_data.append( 'id', $( this ).val() );
+        $.ajax({
+            'data': form_data,
+            'url': $( '#reset_password_url' ).val(),
+            'type': 'POST',
+            'dataType': 'json',
+            'processData': false,
+            'contentType': false,
+        }).done( function( response ){
+            $( '#reset_password_check_modal .no-button' ).trigger( 'click' );
+            $( '#reset_password_success_button' ).trigger( 'click' );
+            up_modal();
+        }).fail( function(){
+            $( '#reset_password_check_modal .no-button' ).trigger( 'click' );
+            $( '#reset_password_error_button' ).trigger( 'click' );
+            up_modal();
+        });
+    });
+    modal_reload( 'reset_password' );
+
     $( document ).on( 'click', '.delete-button', function () {
         $( '#delete_check_modal .yes-button' ).val( $( this ).val() );
         $( this ).next().trigger( 'click' );

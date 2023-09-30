@@ -150,3 +150,23 @@ def change_password_check(request):
     if not authenticate(username=request.user.email, password=request.POST.get('now_password')):
         return JsonResponse( {'check': False}, safe=False )
     return JsonResponse( {'check': True}, safe=False )
+
+def reset_password(request):
+    password = create_password()
+    user = AuthUser.objects.filter(display_id=request.POST.get('id')).first()
+    user.password = make_password(password)
+    user.status = 1
+    user.save()
+
+    subject = 'パスワードリセットメール'
+    template = get_template('setting/email/reset_password.txt')
+    site = get_current_site(request)
+    context = {
+        'protocol': 'https' if request.is_secure() else 'http',
+        'domain': site.domain,
+        'user': user,
+        'password': password,
+    }
+    send_mail(subject, template.render(context), settings.EMAIL_HOST_USER, [user.email])
+
+    return JsonResponse( {}, safe=False )

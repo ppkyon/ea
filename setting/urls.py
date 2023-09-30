@@ -17,4 +17,5 @@ urlpatterns = [
     path('email/change/check/', ajax.change_email_check, name='change_email_check'),
     path('password/change/', ajax.change_password, name='change_password'),
     path('password/change/check/', ajax.change_password_check, name='change_password_check'),
+    path('password/reset/', ajax.reset_password, name='reset_password'),
 ]
