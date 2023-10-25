@@ -11,4 +11,5 @@ urlpatterns = [
     
     path('ea/', include('ea.urls')),
     path('setting/', include('setting.urls')),
+    path('user/', include('user.urls')),
 ]

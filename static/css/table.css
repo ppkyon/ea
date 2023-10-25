@@ -76,3 +76,9 @@
     transform: translate(0px, -34px) !important;
     z-index: 10001;
 }
+
+.table-area table tbody tr td .edit-button,
+.table-area table tbody tr td .detail-button {
+    color: limegreen;
+    border: 1px solid limegreen;
+}

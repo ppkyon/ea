@@ -1,0 +1,93 @@
+<div id="edit_user_modal" class="modal fade">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header d-block ps-4 pe-4">
+                <div class="row">
+                    <div class="col-11">
+                        <div class="d-flex align-items-center">
+                            <p class="modal-title fw-bold">ユーザー情報編集</p>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <button type="button" class="btn-close close-button me-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body d-block ps-4 pe-4">
+                <div class="error-message-area d-none mb-3">
+                    <div class="row">
+                        <div class="col-10 offset-1">
+                            <div class="d-flex align-items-center justify-content-center p-1">
+                                <span class="error-message p-1 mb-0"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="save_user_check_form" value="{% url 'user:save_check' %}">
+                <form id="save_user_form" action="{% url 'user:save' %}" method="POST" enctype="multipart/form-data" data-parsley-focus="none">
+                    <input type="hidden" name="id">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <label class="text-end pe-4 mb-0" style="width: 30%;">登録日</label>
+                                    <input type="text" name="created_at" class="input-text readonly ps-2 pe-2" style="width: 70%;" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <label class="text-end pe-4 mb-0" style="width: 30%;">ID</label>
+                                    <input type="text" name="login" class="input-text readonly ps-2 pe-2" style="width: 70%;" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <label class="text-end pe-4 mb-0" style="width: 30%;">名前</label>
+                                    <div class="input-content d-flex" style="width: 70%;">
+                                        <input type="text" name="family_name" class="input-text ps-2 pe-2 me-2" value="{{ manager.profile.family_name }}" data-parsley-errors-messages-disabled>
+                                        <input type="text" name="first_name" class="input-text ps-2 pe-2 ms-auto" value="{{ manager.profile.first_name }}" data-parsley-errors-messages-disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <label class="text-end pe-4 mb-0" style="width: 30%;">フリガナ</label>
+                                    <div class="input-content d-flex" style="width: 70%;">
+                                        <input type="text" name="family_name_kana" class="input-text ps-2 pe-2 me-2" value="{{ manager.profile.family_name_kana }}" pattern="[\u30A1-\u30F6]*" data-parsley-errors-messages-disabled>
+                                        <input type="text" name="first_name_kana" class="input-text ps-2 pe-2 ms-auto" value="{{ manager.profile.first_name_kana }}" pattern="[\u30A1-\u30F6]*" data-parsley-errors-messages-disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <label class="text-end pe-4 mb-0" style="width: 30%;">メールアドレス</label>
+                                    <input type="email" name="email" value="{{ manager.email }}" class="input-text ps-2 pe-2" style="width: 70%;" data-parsley-errors-messages-disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer justify-content-center ps-4 pe-4">
+                <button type="button" class="btn action-button d-block" value="user">保存する</button>
+                <button type="button" class="d-none" data-bs-toggle="modal" data-bs-target="#edit_check_modal"></button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -31,7 +31,7 @@ class ManagerLoginView(LoginView):
         if self.request.user.status <= 1:
             return self.get_redirect_url() or resolve_url('setting:index')
         else:
-            return self.get_redirect_url() or resolve_url('setting:index') #dashboard
+            return self.get_redirect_url() or resolve_url('user:index') #dashboard
     
     def form_invalid(self, form):
         for error_message in form.errors.as_data():

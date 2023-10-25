@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'ea',
     'fixture',
     'sign',
+    'user',
 ]
 
 MIDDLEWARE = [
