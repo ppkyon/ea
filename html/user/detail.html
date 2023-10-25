@@ -97,7 +97,7 @@
                                 <button type="button" class="d-none" data-bs-toggle="modal" data-bs-target="#edit_user_modal"></button>
                                 <button type="button" value="{{ user.display_id }}" class="btn delete-button d-block ms-auto me-auto">削除</button>
                                 <button type="button" class="d-none" data-bs-toggle="modal" data-bs-target="#delete_check_modal"></button>
-                                <input type="hidden" id="delete_manager_url" value="{% url 'setting:delete_manager' %}">
+                                <input type="hidden" id="delete_user_url" value="{% url 'user:delete' %}">
                             </div>
                         </div>
                     </div>

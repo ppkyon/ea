@@ -84,6 +84,32 @@ $( function() {
         }
     });
 
+    $( document ).on( 'click', '.profile-area .delete-button', function () {
+        $( '#delete_check_modal .yes-button' ).val( $( this ).val() );
+        $( this ).next().trigger( 'click' );
+    });
+    $( document ).on( 'click', '#delete_check_modal .yes-button', function () {
+        var target = $( this );
+        var form_data = new FormData();
+        form_data.append( 'id', $( this ).val() );
+        $.ajax({
+            'data': form_data,
+            'url': $( '#delete_user_url' ).val(),
+            'type': 'POST',
+            'dataType': 'json',
+            'processData': false,
+            'contentType': false,
+        }).done( function( response ){
+            $( '#delete_check_modal .no-button' ).trigger( 'click' );
+            $( target ).next().trigger( 'click' );
+            up_modal();
+        }).fail( function(){
+            $( '#delete_check_modal .no-button' ).trigger( 'click' );
+            $( target ).next().next().trigger( 'click' );
+            up_modal();
+        });
+    });
+
     if ( $( '#save_user_form' ).length ) {
         $( '#save_user_form' ).parsley();
         $( '#save_user_form' ).parsley().options.requiredMessage = "入力してください";

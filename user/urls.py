@@ -8,7 +8,8 @@ urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('detail/', views.DetailView.as_view(), name='detail'),
     
-    path('save', ajax.save, name='save'),
+    path('save/', ajax.save, name='save'),
     path('save/check/', ajax.save_check, name='save_check'),
-    path('get', ajax.get, name='get'),
+    path('delete/', ajax.delete, name='delete'),
+    path('get/', ajax.get, name='get'),
 ]

@@ -35,6 +35,13 @@ def save(request):
 
     return JsonResponse( {}, safe=False )
 
+def delete(request):
+    user = EaUser.objects.filter(display_id=request.POST.get('id')).first()
+    user.delete_flg = True
+    user.save()
+    
+    return JsonResponse( {}, safe=False )
+
 def get(request):
     user = EaUser.objects.filter(display_id=request.POST.get('id')).values(*get_model_field(EaUser)).first()
     user['profile'] = EaUserProfile.objects.filter(user__id=user['id']).values(*get_model_field(EaUserProfile)).first()

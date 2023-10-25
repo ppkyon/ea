@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from django.views.generic import View
 from sign.mixin import ManagerLoginMixin
@@ -12,7 +12,7 @@ class IndexView(ManagerLoginMixin, View):
     title = 'ユーザーリスト'
 
     def get(self, request, **kwargs):
-        user = EaUser.objects.order_by('-created_at').all()
+        user = EaUser.objects.filter(delete_flg=False).order_by('-created_at').all()
         for user_index, user_item in enumerate(user):
             user[user_index].profile = EaUserProfile.objects.filter(user=user_item).first()
             user[user_index].last = EaData.objects.filter(user=user_item).order_by('-close_time').first()
@@ -29,11 +29,14 @@ class DetailView(ManagerLoginMixin, View):
     title = 'ユーザー詳細'
 
     def get(self, request, **kwargs):
-        user = EaUser.objects.filter(display_id=request.GET.get('id')).first()
-        user.profile = EaUserProfile.objects.filter(user=user).first()
-        
-        data = {
-            'title': self.title,
-            'user': user,
-        }
-        return render(self.request, self.template_name, data)
+        user = EaUser.objects.filter(display_id=request.GET.get('id'), delete_flg=False).first()
+        if user:
+            user.profile = EaUserProfile.objects.filter(user=user).first()
+
+            data = {
+                'title': self.title,
+                'user': user,
+            }
+            return render(self.request, self.template_name, data)
+        else:
+            return redirect( 'user:index' )
