@@ -39,4 +39,4 @@ class DetailView(ManagerLoginMixin, View):
             }
             return render(self.request, self.template_name, data)
         else:
-            return redirect( 'user:index' )
+            return redirect('user:index')
