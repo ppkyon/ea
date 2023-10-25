@@ -23,6 +23,7 @@
                         </div>
                     </div>
                 </div>
+                <input type="hidden" id="user_get_url" value="{% url 'user:get' %}">
                 <input type="hidden" id="save_user_check_form" value="{% url 'user:save_check' %}">
                 <form id="save_user_form" action="{% url 'user:save' %}" method="POST" enctype="multipart/form-data" data-parsley-focus="none">
                     <input type="hidden" name="id">

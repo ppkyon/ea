@@ -10,7 +10,6 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <input type="hidden" id="user_get_url" value="{% url 'user:get' %}">
             <div class="table-area mb-3">
                 <table class="table mb-0">
                     <thead>
@@ -48,7 +47,7 @@
                                 </td>
                                 <td>{{ user_item.last_date }}</td>
                                 <td>
-                                    <button type="button" class="btn detail-button">詳細</button>
+                                    <a href="{% url 'user:detail' %}?id={{ user_item.display_id }}" class="btn detail-button">詳細</a>
                                     <button type="button" value="{{ user_item.display_id }}" class="btn edit-button">編集</button>
                                     <button type="button" class="d-none" data-bs-toggle="modal" data-bs-target="#edit_user_modal"></button>
                                 </td>

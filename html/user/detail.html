@@ -1,0 +1,117 @@
+{% extends '../base.html' %}
+
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'css/user.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+    <div class="row mb-3">
+        <div class="col-12 d-flex justify-content-start align-items-center">
+            <p class="main-title mb-3 me-3">{{ title }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <div class="profile-area ps-3 pe-3">
+                <div class="content pt-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <label class="mb-0">登録日</label>
+                                <input type="text" value="{{ user.created_at|date:'Y年m月d日' }}" class="input-text readonly ps-2 pe-2" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <label class="mb-0">ID</label>
+                                <input type="text" value="{{ user.login }}" class="input-text readonly ps-2 pe-2" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <label class="mb-0">名前</label>
+                                {% if user.profile %}
+                                    {% if user.profile.family_name and user.profile.first_name %}
+                                        <input type="text" value="{{ user.profile.family_name }} {{ user.profile.first_name }}" class="input-text readonly ps-2 pe-2" readonly>
+                                    {% elif user.profile.family_name %}
+                                        <input type="text" value="{{ user.profile.family_name }}" class="input-text readonly ps-2 pe-2" readonly>
+                                    {% elif user.profile.first_name %}
+                                        <input type="text" value="{{ user.profile.first_name }}" class="input-text readonly ps-2 pe-2" readonly>
+                                    {% else %}
+                                        <input type="text" value="-" class="input-text readonly ps-2 pe-2" readonly>
+                                    {% endif %}
+                                {% else %}
+                                    <input type="text" value="-" class="input-text readonly ps-2 pe-2" readonly>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <label class="mb-0">フリガナ</label>
+                                {% if user.profile %}
+                                    {% if user.profile.family_name_kana and user.profile.first_name_kana %}
+                                        <input type="text" value="{{ user.profile.family_name_kana }} {{ user.profile.first_name_kana }}" class="input-text readonly ps-2 pe-2" readonly>
+                                    {% elif user.profile.family_name_kana %}
+                                        <input type="text" value="{{ user.profile.family_name_kana }}" class="input-text readonly ps-2 pe-2" readonly>
+                                    {% elif user.profile.first_name_kana %}
+                                        <input type="text" value="{{ user.profile.first_name_kana }}" class="input-text readonly ps-2 pe-2" readonly>
+                                    {% else %}
+                                        <input type="text" value="-" class="input-text readonly ps-2 pe-2" readonly>
+                                    {% endif %}
+                                {% else %}
+                                    <input type="text" value="-" class="input-text readonly ps-2 pe-2" readonly>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content pb-2 mb-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <label class="mb-0">メールアドレス</label>
+                                <input type="text" value="{{ user.profile.email|default:'-' }}" class="input-text readonly ps-2 pe-2" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content pb-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <button type="button" value="{{ user.display_id }}" class="btn edit-button d-block ms-auto me-auto">編集</button>
+                                <button type="button" class="d-none" data-bs-toggle="modal" data-bs-target="#edit_user_modal"></button>
+                                <button type="button" value="{{ user.display_id }}" class="btn delete-button d-block ms-auto me-auto">削除</button>
+                                <button type="button" class="d-none" data-bs-toggle="modal" data-bs-target="#delete_check_modal"></button>
+                                <input type="hidden" id="delete_manager_url" value="{% url 'setting:delete_manager' %}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+
+        </div>
+    </div>
+    {% include 'modal.html' %}
+    {% include 'user/modal.html' %}
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/user/detail.js' %}"></script>
+{% endblock %}

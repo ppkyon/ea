@@ -1,0 +1,30 @@
+.profile-area {
+    background: #fff;
+    border-radius: 0.6rem;
+    box-shadow: 0 0.8rem 1rem rgb(0 0 0 / 0.14);
+}
+.profile-area .content label {
+    color: #000;
+    font-size: 0.8rem;
+}
+.profile-area .content input {
+    width: 65%;
+}
+.profile-area .edit-button,
+.profile-area .delete-button {
+    width: 100px;
+    height: 35px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #fff;
+    border-radius: 5px;
+    transition: all .4s;
+}
+.profile-area .edit-button{
+    color: limegreen;
+    border: 1px solid limegreen;
+}
+.profile-area .delete-button{
+    color: red;
+    border: 1px solid red;
+}

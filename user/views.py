@@ -23,3 +23,17 @@ class IndexView(ManagerLoginMixin, View):
             'user': user,
         }
         return render(self.request, self.template_name, data)
+
+class DetailView(ManagerLoginMixin, View):
+    template_name = 'user/detail.html'
+    title = 'ユーザー詳細'
+
+    def get(self, request, **kwargs):
+        user = EaUser.objects.filter(display_id=request.GET.get('id')).first()
+        user.profile = EaUserProfile.objects.filter(user=user).first()
+        
+        data = {
+            'title': self.title,
+            'user': user,
+        }
+        return render(self.request, self.template_name, data)
