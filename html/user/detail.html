@@ -1,6 +1,7 @@
 {% extends '../base.html' %}
 
 {% load static %}
+{% load humanize %}
 
 {% block css %}
     <link href="{% static 'css/user.css' %}" rel="stylesheet" type="text/css" />
@@ -105,7 +106,25 @@
             </div>
         </div>
         <div class="col-8">
-
+            {% for history_item in user.history %}
+                <div class="history-area ps-3 pe-3 mb-3">
+                    <input type="hidden" name="year" value="{{ history_item.close_month|date:'Y' }}">
+                    <input type="hidden" name="month" value="{{ history_item.close_month|date:'m' }}">
+                    <div class="content pt-3">
+                        <p class="history-title mb-0">{{ history_item.close_month|date:'Y年m月' }}</p>
+                    </div>
+                    <div class="content d-flex justify-content-start align-items-center pb-3">
+                        <p class="history-text mb-0" style="width: 150px;">取引回数 : {{ history_item.count }}回</p>
+                        {% if history_item.profit_month > 0 %}
+                            <p class="history-text mb-0">損益 : <span style="color: #0067C0;">+{{ history_item.profit_month|intcomma }}</span></p>
+                        {% elif history_item.profit_month < 0 %}
+                            <p class="history-text mb-0">損益 : <span style="color: #FF0000;">{{ history_item.profit_month|intcomma }}</span></p>
+                        {% else %}
+                            <p class="history-text mb-0">損益 : {{ history_item.profit_month|intcomma }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
     {% include 'modal.html' %}

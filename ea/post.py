@@ -5,6 +5,7 @@ from common import create_code
 
 from ea.models import EaUser, EaData
 
+import datetime
 import uuid
 
 @csrf_exempt
@@ -34,13 +35,13 @@ def order(request):
             lots = conversion_data(request.POST.get('lots')),
             swap = conversion_data(request.POST.get('swap')),
             open_price = conversion_data(request.POST.get('openprice')),
-            open_time = conversion_data(request.POST.get('opentime')),
+            open_time = datetime.datetime.fromtimestamp(int(conversion_data(request.POST.get('opentime'))), datetime.timezone(datetime.timedelta(hours=0), 'JST')),
             close_price = conversion_data(request.POST.get('closeprice')),
-            close_time = conversion_data(request.POST.get('closetime')),
+            close_time = datetime.datetime.fromtimestamp(int(conversion_data(request.POST.get('closetime'))), datetime.timezone(datetime.timedelta(hours=0), 'JST')),
             stop_loss = conversion_data(request.POST.get('stoploss')),
             commission = conversion_data(request.POST.get('commission')),
             expiration = conversion_data(request.POST.get('expiration')),
-            profit = conversion_data(request.POST.get('profit')),
+            profit = int(conversion_data(request.POST.get('profit'))[:conversion_data(request.POST.get('profit')).find('.')]),
             take_profit = conversion_data(request.POST.get('takeprofit')),
             comment = conversion_data(request.POST.get('comment')),
         )

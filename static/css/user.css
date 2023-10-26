@@ -28,3 +28,18 @@
     color: red;
     border: 1px solid red;
 }
+
+.history-area {
+    background: #fff;
+    border-radius: 0.6rem;
+    box-shadow: 0 0.8rem 1rem rgb(0 0 0 / 0.14);
+    cursor: pointer;
+}
+.history-area .history-title {
+    font-size: 16px;
+    font-weight: bold;
+}
+.history-area .history-text {
+    font-size: 14px;
+    font-weight: bold;
+}

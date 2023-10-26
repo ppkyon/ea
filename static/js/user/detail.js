@@ -110,6 +110,10 @@ $( function() {
         });
     });
 
+    $( document ).on( 'click', '.history-area', function () {
+        window.location.href = "/user/history/?year=" + $( this ).find( '[name=year]' ).val() + '&month=' + $( this ).find( '[name=month]' ).val();
+    });
+
     if ( $( '#save_user_form' ).length ) {
         $( '#save_user_form' ).parsley();
         $( '#save_user_form' ).parsley().options.requiredMessage = "入力してください";

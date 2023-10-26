@@ -1,0 +1,52 @@
+{% extends '../base.html' %}
+
+{% load static %}
+{% load humanize %}
+
+{% block css %}
+    <link href="{% static 'css/user.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+    <div class="row mb-2">
+        <div class="col-12 d-flex justify-content-start align-items-center">
+            <p class="main-title mb-3 me-3">{{ title }}</p>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-12 d-flex justify-content-start align-items-center">
+            <p class="main-title mb-1 me-3">{{ year }}年 {{ month }}月</p>
+        </div>
+    </div>
+    <div class="row">
+        {% for history_item in history %}
+            <div class="history-area ps-3 pe-3 mb-3">
+                <div class="content d-flex justify-content-start align-items-center mb-1 pt-3">
+                    <p class="history-text mb-0" style="width: 180px;">注文番号 : {{ history_item.ticket }}</p>
+                    {% if history_item.type == '0' %}
+                        <p class="history-text mb-0" style="width: 120px;">種別 : buy</p>
+                    {% elif history_item.type == '1' %}
+                        <p class="history-text mb-0" style="width: 120px;">種別 : sell</p>
+                    {% endif %}
+                    <p class="history-text mb-0" style="width: 120px;">数量 : {{ history_item.lots|floatformat:2 }}</p>
+                    <p class="history-text mb-0" style="width: 120px;">通貨 : {{ history_item.symbol }}</p>
+                </div>
+                <div class="content d-flex justify-content-start align-items-center mb-1">
+                    <p class="history-text mb-0" style="width: 300px;">オープン時間 : {{ history_item.open_time }}</p>
+                    <p class="history-text mb-0" style="width: 300px;">オープン価格 : {{ history_item.open_price|floatformat:2 }}</p>
+                </div>
+                <div class="content d-flex justify-content-start align-items-center pb-3">
+                    <p class="history-text mb-0" style="width: 300px;">クローズ時間 : {{ history_item.close_time }}</p>
+                    <p class="history-text mb-0" style="width: 230px;">クローズ価格 : {{ history_item.close_price|floatformat:2 }}</p>
+                    {% if history_item.profit > 0 %}
+                        <p class="history-text mb-0">損益 : <span style="color: #0067C0;">+{{ history_item.profit|intcomma }}</span></p>
+                    {% elif history_item.profit < 0 %}
+                        <p class="history-text mb-0">損益 : <span style="color: #FF0000;">{{ history_item.profit|intcomma }}</span></p>
+                    {% else %}
+                        <p class="history-text mb-0">損益 : {{ history_item.profit|intcomma }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
