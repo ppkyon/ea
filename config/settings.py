@@ -139,7 +139,7 @@ if env('DEBUG') == 'False':
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 if env('DEBUG') == 'False':
-    STATIC_ROOT = '/usr/share/nginx/html/media'
+    MEDIA_ROOT = '/usr/share/nginx/html/media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
