@@ -32,7 +32,7 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
-CSRF_TRUSTED_ORIGINS = ['https://68fb-126-74-175-24.ngrok-free.app']
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_URL')
 
 
 # Application definition
