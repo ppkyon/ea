@@ -133,9 +133,13 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
     ('node_modules', os.path.join(BASE_DIR, 'node_modules/')),
 )
+if env('DEBUG') == 'False':
+    STATIC_ROOT = '/usr/share/nginx/html/static'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+if env('DEBUG') == 'False':
+    STATIC_ROOT = '/usr/share/nginx/html/media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
